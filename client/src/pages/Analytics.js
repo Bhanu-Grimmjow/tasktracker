@@ -201,9 +201,11 @@ export default function Analytics() {
   const endDate = toDateStr(year, month, daysInMonth);
 
   useEffect(() => {
+    const start = toDateStr(year, month, 1);
+    const end = toDateStr(year, month, getDaysInMonth(year, month));
     Promise.all([
-      getDailyAnalytics(startDate, endDate),
-      getHeatmap(startDate, endDate),
+      getDailyAnalytics(start, end),
+      getHeatmap(start, end),
       getMonthlyAnalytics(month, year),
       getStreak(),
       getTasks(month, year),

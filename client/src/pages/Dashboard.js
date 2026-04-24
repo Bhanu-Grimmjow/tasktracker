@@ -70,11 +70,12 @@ export default function Dashboard() {
   const greeting = now.getHours() < 12 ? 'Good Morning' : now.getHours() < 17 ? 'Good Afternoon' : 'Good Evening';
 
   useEffect(() => {
-    const month = now.getMonth() + 1;
-    const year = now.getFullYear();
+    const month = new Date().getMonth() + 1;
+    const year = new Date().getFullYear();
+    const todayStr = new Date().toISOString().split('T')[0];
     Promise.all([
       getTasks(month, year),
-      getLogs({ startDate: today, endDate: today }),
+      getLogs({ startDate: todayStr, endDate: todayStr }),
       getStreak(),
       getMonthlyAnalytics(month, year),
     ]).then(([t, l, s, m]) => {
@@ -129,7 +130,6 @@ export default function Dashboard() {
                 strokeDashoffset={`${2 * Math.PI * 50 * (1 - todayPct / 100)}`}
                 style={{ transition: 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)', filter: 'drop-shadow(0 0 12px rgba(220,38,38,0.7))' }}
               />
-              {/* Inner decorative ring */}
               <circle cx="60" cy="60" r="42" fill="none" stroke="rgba(220,38,38,0.06)" strokeWidth="1" />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
